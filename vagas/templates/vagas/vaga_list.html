@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Lista de Vagas {% endblock page_title %}
+
+{% block content %}
+
+    <h1>Lista de Vagas</h1>
+    <a href="{% url 'vaga_create' %}" class="btn btn-primary">Nova Vaga</a>
+
+    {% if vaga_list %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Requisitos</th>
+                    <th scope="col">Jornada de Trabalho</th>
+                    <th scope="col">Salario</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in vaga_list %}
+                <tr>
+                    <th scope="row">{{ v.pk }}</th>
+                    <td>{{ v.titulo }}</td>
+                    <td>{{ v.descricao }}</td>
+                    <td>{{ v.requisitos }}</td>
+                    <td>{{ v.jornada_trabalho }}</td>
+                    <td>{{ v.salario }}</td>
+                    <td>
+                        <a href="{% url 'vaga_update' pk=v.pk %}" class="btn btn-secondary btn-sm">Editar</a>
+                        <a href="{% url 'vaga_delete' pk=v.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>Não há Vagas</p>
+    {% endif %}
+
+{% endblock content %}

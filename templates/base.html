@@ -10,6 +10,7 @@
     >
 </head>
 <body>
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'home' %}">CUPWeb</a>
@@ -18,7 +19,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="{% url 'candidato_list' %}">Candidatos</a>
+                <a class="nav-link active" href="{% url 'candidato_list' %}">Candidatos</a>
+                <a class="nav-link active" href="{% url 'vaga_list' %}">Vagas</a>
             </div>
             </div>
         </div>
