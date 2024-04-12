@@ -1,0 +1,17 @@
+{% extends 'base.html' %} 
+
+{% block page_title %} 
+    Excluir Cadastro
+{% endblock page_title %} 
+
+{% block content %}
+    <h1>Excluir Cadastro</h1>
+
+    <p>Tem certeza que deseja excluir o cadastro do candidato <strong>{{ formulario.candidato.nome }}</strong> na vaga <strong>{{ formulario.vaga.titulo }}</strong> ?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a href="{% url 'formulario_list' %}" class="btn btn-primary">Cancelar</a>
+    </form>
+{% endblock content %}

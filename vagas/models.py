@@ -6,3 +6,6 @@ class Vaga(models.Model):
     requisitos = models.TextField()
     jornada_trabalho = models.CharField(max_length=50)
     salario = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.titulo

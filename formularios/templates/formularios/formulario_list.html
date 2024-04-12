@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Lista de Formularios {% endblock page_title %}
+
+{% block content %}
+
+    <h1>Lista de Formularios</h1>
+    <a href="{% url 'formulario_create' %}" class="btn btn-primary">Novo Formulario</a>
+
+    {% if formulario_list %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Preenchido em</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Candidato</th>
+                    <th scope="col">Vaga</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in formulario_list %}
+                <tr>
+                    <th scope="row">{{ f.pk }}</th>
+                    <td>{{ f.data_preenchimento }}</td>
+                    <td>{{ f.status }}</td>
+                    <td>{{ f.candidato.nome }}</td>
+                    <td>{{ f.vaga.titulo }}</td>
+                    <td>
+                        <a href="{% url 'formulario_update' pk=f.pk %}" class="btn btn-secondary btn-sm">Editar</a>
+                        <a href="{% url 'formulario_delete' pk=f.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>Não há Formularios</p>
+    {% endif %}
+
+{% endblock content %}

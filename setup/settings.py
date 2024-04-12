@@ -34,6 +34,7 @@ MY_APPS = [
     "home.apps.HomeConfig",
     "candidatos.apps.CandidatosConfig",
     "vagas.apps.VagasConfig",
+    "formularios.apps.FormulariosConfig"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
