@@ -29,13 +29,14 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
+    "django_filters",
 ]
 
 MY_APPS = [
     "home.apps.HomeConfig",
     "candidatos.apps.CandidatosConfig",
     "vagas.apps.VagasConfig",
-    "formularios.apps.FormulariosConfig"
+    "formularios.apps.FormulariosConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -116,6 +117,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "templates/static")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

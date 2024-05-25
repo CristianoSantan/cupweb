@@ -1,44 +1,94 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block page_title %} Lista de Formularios {% endblock page_title %}
 
 {% block content %}
+<div class="container">
+    <h1 class="my-5">Cargo: {{ vaga.titulo }}</h1>
+    <a href="{% url 'formulario_create' vaga_id=vaga.pk %}" class="btn btn-primary my-2">Novo Formulario</a>
 
-    <h1>Lista de Formularios</h1>
-    <a href="{% url 'formulario_create' %}" class="btn btn-primary">Novo Formulario</a>
+    <div class="card">
+        <div class="card-header">
+            <form method="GET">
+                {% comment %} {{ filter.form|crispy}} {% endcomment %}
 
-    {% if formulario_list %}
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Preenchido em</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Candidato</th>
-                    <th scope="col">Vaga</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for f in formulario_list %}
-                <tr>
-                    <th scope="row">{{ f.pk }}</th>
-                    <td>{{ f.data_preenchimento }}</td>
-                    <td>{{ f.status }}</td>
-                    <td>{{ f.candidato.nome }}</td>
-                    <td>{{ f.vaga.titulo }}</td>
-                    <td>
-                        <a href="{% url 'formulario_update' pk=f.pk %}" class="btn btn-secondary btn-sm">Editar</a>
-                        <a href="{% url 'formulario_delete' pk=f.pk %}" class="btn btn-danger btn-sm">Excluir</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <div class="row g-3 my-2">
+                    <div class="col-sm-7">
+                      <input type="text" name="candidato__nome__icontains" class="form-control" placeholder="Nome" aria-label="Nome">
+                    </div>
+                    <div class="col-sm">
+                      <input type="text" name="candidato__endereco__icontains" class="form-control" placeholder="Endereço" aria-label="Endereço">
+                    </div> 
+                    <div class="col-sm">
+                      <input type="text" name="candidato__educacao__icontains" class="form-control" placeholder="Educação" aria-label="Educação">
+                    </div> 
+                  </div>
+
+                  <div class="row g-3 my-2">
+                    <div class="col-sm-7">
+                      <input type="text" name="candidato__experiencia_profissional__icontains" class="form-control" placeholder="Experiência Profissional" aria-label="Experiência Profissional">
+                    </div>
+                    <div class="col-sm">
+                      <input type="text" name="status__icontains" class="form-control" placeholder="Status" aria-label="Status">
+                    </div> 
+                  </div>
+
+                <button class="btn btn-primary" type="submit"> buscar </button>
+                <a href="{% url "formulario_list" vaga_id=vaga.pk %}" class="btn btn-secondary"> Limpar </a>
+            </form>
+        </div>
+        <div class="card-body">
+            {% if formulario_list %}
+            <p>Mostrando {{ formulario_list|length }} vagas</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Candidato</th>
+                            <th scope="col">Endereço</th>
+                            <th scope="col">Educação</th>
+                            <th scope="col">Experiência</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Preenchido em</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for f in formulario_list %}
+                        <tr>
+                            <th scope="row">{{ f.pk }}</th>
+                            <td>{{ f.candidato.nome }}</td>
+                            <td>{{ f.candidato.endereco }}</td>
+                            <td>{{ f.candidato.educacao }}</td>
+                            <td>{{ f.candidato.experiencia_profissional }}</td>
+                            <td>{{ f.status }}</td>
+                            <td>{{ f.data_preenchimento }}</td>
+                            <td>
+                                <a href="{% url 'formulario_update' pk=f.pk vaga_id=vaga.pk %}" class="" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{% url 'formulario_delete' pk=f.pk vaga_id=vaga.pk %}" class="" title="Deletar"><i class="fa-solid fa-eraser"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>Não há Formularios</p>
+            {% endif %}
+        </div>
     </div>
-    {% else %}
-        <p>Não há Formularios</p>
-    {% endif %}
+</div>
 
 {% endblock content %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    $('.select').select2();
+    $('.selectmultiple').select2({
+      multiple: true
+    });
+  });
+</script>
+{% endblock scripts %}

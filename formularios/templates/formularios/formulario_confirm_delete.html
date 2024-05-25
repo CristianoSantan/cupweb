@@ -5,13 +5,15 @@
 {% endblock page_title %} 
 
 {% block content %}
-    <h1>Excluir Cadastro</h1>
+    <div class="container">
+        <h1 class="my-5">Excluir Cadastro</h1>
 
-    <p>Tem certeza que deseja excluir o cadastro do candidato <strong>{{ formulario.candidato.nome }}</strong> na vaga <strong>{{ formulario.vaga.titulo }}</strong> ?</p>
+        <p>Tem certeza que deseja excluir o cadastro do candidato <strong>{{ formulario.candidato.nome }}</strong> na vaga <strong>{{ formulario.vaga.titulo }}</strong> ?</p>
 
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Excluir</button>
-        <a href="{% url 'formulario_list' %}" class="btn btn-primary">Cancelar</a>
-    </form>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Excluir</button>
+            <a href="{% url 'formulario_list' vaga_id %}" class="btn btn-primary">Cancelar</a>
+        </form>
+    </div>
 {% endblock content %}

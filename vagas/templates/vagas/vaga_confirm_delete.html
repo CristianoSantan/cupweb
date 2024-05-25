@@ -5,13 +5,15 @@
 {% endblock page_title %} 
 
 {% block content %}
-    <h1>Excluir Vaga</h1>
+    <div class="container">
+        <h1 class="my-5">Excluir Vaga</h1>
 
-    <p>Tem certeza que deseja excluir o vaga <strong>{{ vaga.titulo }}</strong> ?</p>
+        <p>Tem certeza que deseja excluir o vaga <strong>{{ vaga.titulo }}</strong> ?</p>
 
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Excluir</button>
-        <a href="{% url 'vaga_list' %}" class="btn btn-primary">Cancelar</a>
-    </form>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Excluir</button>
+            <a href="{% url 'vaga_list' %}" class="btn btn-primary">Cancelar</a>
+        </form>
+    </div>
 {% endblock content %}

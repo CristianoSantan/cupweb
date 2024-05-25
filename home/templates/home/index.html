@@ -1,8 +1,206 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block page_title %} Home {% endblock page_title %}
 
 {% block content %}
-    <h1>CUP - Cadastro Único de Profissionais</h1>
-    <p>“Conectando competências, construindo oportunidades - CUP, seu destino para o sucesso profissional!”</p>
+
+    <style>
+      .video-container {
+        position: relative;
+        top: -86px;
+        width: 100%;
+        height: 80vh;
+        overflow: hidden;
+      }
+
+      #background-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+      }
+
+      .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(100, 100, 150, 0.5); /* Ajuste a cor e a opacidade aqui */
+        z-index: 0;
+    }
+
+      .content_video {
+          position: relative;
+          z-index: 1;
+          color: white;
+          text-align: center;
+          padding: 50px 20px;
+      }
+
+      .lead_color {
+          color: rgba(255, 255, 255, 0.8); /* Texto ligeiramente transparente para melhor legibilidade */
+      }
+    </style>
+
+    <div class="video-container mb-4 d-flex align-items-center">
+
+      <video autoplay muted loop id="background-video">
+        <source src="{% static "video/medicos.mp4" %}" type="video/mp4">
+        Seu navegador não suporta a tag de vídeo.
+      </video>
+      <div class="video-overlay"></div>
+
+      <section class="content_video py-5 text-center">
+          <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+              <h1 class="fw-light">CUPWeb</h1>
+              <p class="lead lead_color">Junte-se à nossa comunidade de profissionais de saúde. Cadastre-se hoje e descubra oportunidades que combinam com seu perfil e ambições.</p>
+              <p>
+                <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastre seu curriculo</button>
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastre seu currículo</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="candidatos/create">
+                {% csrf_token %}
+                <div id="div_id_nome" class="mb-3"> <label
+                  for="id_nome" class="form-label requiredField">
+                  Nome<span class="asteriskField">*</span> </label> <input type="text" name="nome" maxlength="80" class="textinput form-control" required id="id_nome"> </div> <div id="div_id_email" class="mb-3"> <label
+                  for="id_email" class="form-label requiredField">
+                  Email<span class="asteriskField">*</span> </label> <input type="text" name="email" maxlength="80" class="textinput form-control" required id="id_email"> </div> <div id="div_id_endereco" class="mb-3"> <label
+                  for="id_endereco" class="form-label requiredField">
+                  Endereco<span class="asteriskField">*</span> </label> <input type="text" name="endereco" maxlength="80" class="textinput form-control" required id="id_endereco"> </div> <div id="div_id_telefone" class="mb-3"> <label
+                  for="id_telefone" class="form-label requiredField">
+                  Telefone<span class="asteriskField">*</span> </label> <input type="text" name="telefone" maxlength="20" class="textinput form-control" required id="id_telefone"> </div> <div id="div_id_educacao" class="mb-3"> <label
+                  for="id_educacao" class="form-label requiredField">
+                  Educacao<span class="asteriskField">*</span> </label> <input type="text" name="educacao" maxlength="255" class="textinput form-control" required id="id_educacao"> </div> <div id="div_id_nascimento" class="mb-3"> <label
+                  for="id_nascimento" class="form-label requiredField">
+                  Nascimento<span class="asteriskField">*</span> </label> <input type="text" name="nascimento" class="dateinput form-control" required id="id_nascimento"> </div> <div id="div_id_experiencia_profissional" class="mb-3"> <label
+                  for="id_experiencia_profissional" class="form-label requiredField">
+                  Experiência profissional<span class="asteriskField">*</span> </label> <input type="text" name="experiencia_profissional" maxlength="255" class="textinput form-control" required id="id_experiencia_profissional"> </div>
+  
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="container marketing">
+        <div class="row featurette mb-5">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">Encontre a Vaga <span class="text-body-secondary">Ideal.</span></h2>
+            <p class="lead">Conecte-se às melhores oportunidades na área da saúde. Encontre a vaga perfeita para você com apenas alguns cliques.</p>
+            <a href="{% url "formulario_create" vaga_id=0 %}" class="btn btn-primary mb-3">Inscreva-se em uma vaga</a>
+          </div>
+          <div class="col-md-5">
+            <img src="{% static "img/profissionais.jpeg" %}" class="d-block w-100 h-100" alt="cadastro">
+          </div>
+        </div>
+
+         <!-- Modal -->
+      <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Inscreva-se em uma vaga</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="formularios/vagas/0/create">
+                {% csrf_token %}
+               
+                <div id="div_id_candidato" class="mb-3"> 
+                  <label for="id_candidato" class="form-label requiredField"> Candidato <span class="asteriskField">*</span></label> 
+                  <select name="candidato" class="select form-select" required id="id_candidato"> 
+                    <option value="" selected>---------</option> 
+                    <option value="4">Andre</option> 
+                    <option value="1">Jose dos Santos</option> 
+                    <option value="2">Maria Silva da costa</option> 
+                    <option value="3">Miriam de Andrade</option>
+                  </select> 
+                </div> 
+                <div id="div_id_vaga" class="mb-3"> 
+                    <label for="id_vaga" class="form-label requiredField"> Vaga <span class="asteriskField">*</span> </label> 
+                    <select name="vaga" class="select form-select" required id="id_vaga"> 
+                      <option value="" selected>---------</option> 
+                      <option value="1">Medico</option> 
+                      <option value="2">Enfermagem</option> 
+                      <option value="3">Ortopedista</option>
+                </select> 
+              </div> 
+              <div id="div_id_status" class="mb-3"> 
+                <label for="id_status" class="form-label requiredField"> Status <span class="asteriskField">*</span> </label> 
+                <select name="status" class="select form-select" required id="id_status"> 
+                  <option value="" selected>---------</option> 
+                  <option value="Enviado">Enviado</option> 
+                  <option value="Em Análise">Em Análise</option> 
+                  <option value="Aprovado">Aprovado</option> 
+                  <option value="Rejeitado">Rejeitado</option>
+                </select> 
+              </div>
+
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+        
+    
+        <div class="row featurette mb-5">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1">Processo de Cadastro <span class="text-body-secondary">Fácil.</span></h2>
+            <p class="lead">Cadastre-se em minutos! Nosso processo rápido e intuitivo coloca você mais perto do seu próximo emprego na saúde.</p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img src="{% static "img/cadastro.jpeg" %}" class="d-block w-100" alt="cadastro">
+          </div>
+        </div>
+    
+        
+    
+        <div class="row featurette mb-5">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">Cresça na <span class="text-body-secondary">Carreira.</span></h2>
+            <p class="lead">Dê o próximo passo na sua carreira. Cadastre-se agora e tenha acesso às melhores vagas na área da saúde.</p>
+          </div>
+          <div class="col-md-5">
+            <img src="{% static "img/satisfacao.jpeg" %}" class="d-block w-100" alt="cadastro">
+          </div>
+        </div>
+    
+        
+    </div>
+
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var video = document.getElementById("background-video");
+        video.playbackRate = 0.3; // Diminui a velocidade de reprodução para 50% do normal
+    });
+  </script>
+{% endblock scripts %}

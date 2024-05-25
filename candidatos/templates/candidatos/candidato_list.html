@@ -1,50 +1,67 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block page_title %} Lista de Candidatos {% endblock page_title %}
 
 {% block content %}
+<div class="container">
+    <h1 class="my-5">Candidatos</h1>
+    <a href="{% url 'candidato_create' %}" class="btn btn-primary my-2">Novo</a>
 
-    <h1>Lista de Candidatos</h1>
-    <a href="{% url 'candidato_create' %}" class="btn btn-primary">Novo Candidato</a>
-
-    {% if candidato_list %}
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Endereço</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Educação</th>
-                    <th scope="col">Experiência</th>
-                    <th scope="col">Nascimento</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for c in candidato_list %}
-                <tr>
-                    <th scope="row">{{ c.pk }}</th>
-                    <td>{{ c.nome }}</td>
-                    <td>{{ c.email }}</td>
-                    <td>{{ c.endereco }}</td>
-                    <td>{{ c.telefone }}</td>
-                    <td>{{ c.educacao }}</td>
-                    <td>{{ c.experiencia_profissional }}</td>
-                    <td>{{ c.nascimento }}</td>
-                    <td>
-                        <a href="{% url 'candidato_update' pk=c.pk %}" class="btn btn-secondary btn-sm">Editar</a>
-                        <a href="{% url 'candidato_delete' pk=c.pk %}" class="btn btn-danger btn-sm">Excluir</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% else %}
-        <p>Não há Candidatos</p>
-    {% endif %}
-
+    <div class="card">
+        <div class="card-body">
+            {% if candidato_list %}
+              <p>Mostrando {{ candidato_list|length }} vagas</p>
+              <div class="table-responsive">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Nome</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Endereço</th>
+                              <th scope="col">Telefone</th>
+                              <th scope="col">Educação</th>
+                              <th scope="col">Experiência</th>
+                              <th scope="col">Nascimento</th>
+                              <th scope="col">Ações</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for c in candidato_list %}
+                          <tr>
+                              <th scope="row">{{ c.pk }}</th>
+                              <td>{{ c.nome }}</td>
+                              <td>{{ c.email }}</td>
+                              <td>{{ c.endereco }}</td>
+                              <td>{{ c.telefone }}</td>
+                              <td>{{ c.educacao }}</td>
+                              <td>{{ c.experiencia_profissional }}</td>
+                              <td>{{ c.nascimento }}</td>
+                              <td>
+                                  <a href="{% url 'candidato_update' pk=c.pk %}" class="" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                  <a href="{% url 'candidato_delete' pk=c.pk %}" class="" title="Deletar"><i class="fa-solid fa-eraser"></i></a>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+            {% else %}
+            <p>Não há Candidatos</p>
+            {% endif %}
+          </div>
+      </div>
+</div>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    $('.select').select2();
+    $('.selectmultiple').select2({
+      multiple: true
+    });
+  });
+</script>
+{% endblock scripts %}

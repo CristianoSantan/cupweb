@@ -11,17 +11,18 @@
 {% endblock page_title %}
 
 {% block content %}
-    {% if todo.pk %}
-        <h1>Editar Candidato</h1>
-    {% else %}
-        <h1>Novo Candidato</h1>
-    {% endif %}
+    <div class="container">
+        {% if todo.pk %}
+            <h1 class="my-5">Editar Candidato</h1>
+        {% else %}
+            <h1 class="my-5">Novo Candidato</h1>
+        {% endif %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'candidato_list' %}" class="btn btn-secondary">voltar</a>
-    </form>
-        
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{% url 'candidato_list' %}" class="btn btn-secondary">voltar</a>
+        </form>
+    </div>
 {% endblock content %}

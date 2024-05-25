@@ -1,44 +1,51 @@
 {% extends 'base.html' %}
 
-{% block page_title %} Lista de Vagas {% endblock page_title %}
+{% block page_title %} Vagas {% endblock page_title %}
 
 {% block content %}
+    <div class="container">
+        <h1 class="my-5">Vagas</h1>
+        <a href="{% url 'vaga_create' %}" class="btn btn-primary my-2">Nova</a>
 
-    <h1>Lista de Vagas</h1>
-    <a href="{% url 'vaga_create' %}" class="btn btn-primary">Nova Vaga</a>
-
-    {% if vaga_list %}
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Requisitos</th>
-                    <th scope="col">Jornada de Trabalho</th>
-                    <th scope="col">Salario</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for v in vaga_list %}
-                <tr>
-                    <th scope="row">{{ v.pk }}</th>
-                    <td>{{ v.titulo }}</td>
-                    <td>{{ v.descricao }}</td>
-                    <td>{{ v.requisitos }}</td>
-                    <td>{{ v.jornada_trabalho }}</td>
-                    <td>{{ v.salario }}</td>
-                    <td>
-                        <a href="{% url 'vaga_update' pk=v.pk %}" class="btn btn-secondary btn-sm">Editar</a>
-                        <a href="{% url 'vaga_delete' pk=v.pk %}" class="btn btn-danger btn-sm">Excluir</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-body">
+                {% if vaga_list %}
+                <p>Mostrando {{ vaga_list|length }} vagas</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Requisitos</th>
+                                <th scope="col">Jornada de Trabalho</th>
+                                <th scope="col">Salario</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for v in vaga_list %}
+                            <tr>
+                                <th scope="row">{{ v.pk }}</th>
+                                <td><a href="{% url 'formulario_list' v.pk %}">{{ v.titulo }}</a></td>
+                                <td>{{ v.descricao }}</td>
+                                <td>{{ v.requisitos }}</td>
+                                <td>{{ v.jornada_trabalho }}</td>
+                                <td>{{ v.salario }}</td>
+                                <td>
+                                    <a href="{% url 'vaga_update' pk=v.pk %}" class="" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{% url 'vaga_delete' pk=v.pk %}" class="" title="Deletar"><i class="fa-solid fa-eraser"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+    
     {% else %}
         <p>Não há Vagas</p>
     {% endif %}
